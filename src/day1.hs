@@ -4,11 +4,10 @@ module Day1
 ( process
 ) where
 
+import Helper (getDataFilePath)
 import Data.Char (digitToInt)
 import System.Directory
 import System.FilePath
-
-dataFolder = "data"
 
 -- 1122 produces a sum of 3 (1 + 2) because the first digit (1) matches the second digit and the third digit (2) matches the fourth digit.
 -- 1111 produces 4 because each digit (all 1) matches the next.
@@ -22,19 +21,6 @@ test4 = [9, 1, 2, 1, 2, 1, 2, 9]
 
 runTest :: [Integer] -> Int
 runTest x = aoc (map fromInteger x)
-
-getDataFilePath filename = do
-    dir <- searchCurrentDirectory filename
-    return (joinPath [dir, dataFolder, filename])
-
-searchCurrentDirectory filename = do
-    dir <- getCurrentDirectory
-    searchForFile dir filename
-
-searchForFile dir filename = do
-    doesFileExist (joinPath [dir, "data", filename]) >>= \case
-        True ->  return dir
-        False -> searchForFile (takeDirectory dir) filename
 
 readNumbers :: IO String
 readNumbers = do

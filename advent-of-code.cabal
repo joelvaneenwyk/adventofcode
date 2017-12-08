@@ -19,12 +19,16 @@ description:         Please see the README on Github at <https://github.com/gith
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Day1, Day2
+  exposed-modules:     Day1, Day2, Helper
   build-depends:       base >= 4.7 && < 5
                      , parsec
                      , filemanip
                      , filepath
                      , directory
+                     , cassava
+                     , bytestring
+                     , vector
+                     , text
   default-language:    Haskell2010
 
 executable aoc-exe

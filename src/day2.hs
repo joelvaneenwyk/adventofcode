@@ -2,22 +2,21 @@ module Day2
 ( process
 ) where
 
--- import Data.Char (digitToInt)
--- import Text.ParserCombinators.Parsec
--- import Data.String.CSV
+import Helper
+import Data.Char -- ord
+import qualified Data.ByteString.Lazy as BL
+import qualified Data.Vector as V
+import Data.Csv
+import Data.Text    (Text)
 
--- readNumbers :: IO String
--- readNumbers = readFile "../data/day2.csv"
+dec_opts = defaultDecodeOptions {
+    decDelimiter = fromIntegral $ ord '\t'
+  }
 
--- intify :: IO [Int]
--- intify = fmap (map digitToInt) readNumbers
+getData :: IO (Either String (V.Vector (V.Vector Int)))
+getData = do
+    filename <- getDataFilePath "day2.csv"
+    csvData <- BL.readFile filename
+    return (decodeWith dec_opts NoHeader csvData)
 
--- aoc :: [Int] -> Int
--- aoc (x:y:xs) = if x == y
---                     then (1 + aoc(xs))
---                     else aoc(xs)
--- aoc (x:xs) = 0
--- aoc _ = 0
-
---process :: IO ()
 process = 5
