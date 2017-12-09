@@ -19,4 +19,15 @@ getData = do
     csvData <- BL.readFile filename
     return (decodeWith dec_opts NoHeader csvData)
 
-process = 5
+processRow :: (Ord a, Num a) => V.Vector a -> a
+processRow row = (V.maximum row) - (V.minimum row)
+
+processTable :: (Ord a, Num a) => V.Vector (V.Vector a) -> a
+processTable table = V.sum (V.map processRow table)
+
+process :: IO Int
+process = do
+    x <- getData
+    case x of
+        Left error -> return 0
+        Right values -> return (processTable values)
